@@ -1,0 +1,26 @@
+{% extends 'app.html.twig' %}
+ 
+{% block panel %} 
+    <div class="row">
+        <div class="col-sm-12 card card-body bg-lite pull-rigth sombra border-lite">
+            {{ form_start(form) }}
+                
+                {% block cont_form %}{% endblock %}
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="btn-group btn-group-sm mt-4" role="group">
+                            {% block add_btn_form %}{% endblock %}
+                            <button 
+                                class="btn btn-primary text-truncate"
+                                type="submit"
+                            >Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div> 
+
+    {% block anexar %}{% endblock %}
+{% endblock %}

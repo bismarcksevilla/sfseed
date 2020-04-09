@@ -1,0 +1,125 @@
+<thead class="thead-inverse">
+    <tr class="small">  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">FECHA</p>
+        </th>  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">F.ID</p>
+        </th>  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">O.P.</p>
+        </th>
+        <th class="p-1 text-left">
+            <p class="m-0 text-muted">POR</p>
+        </th>
+        <th class="p-1 text-left">
+            <p class="m-0 text-muted">CLIENTE</p>
+        </th>
+        <th class="p-1 text-left">
+            <p class="m-0 text-muted">CONDICION</p>
+        </th>
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">ESTADO</p>
+        </th>  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">VALOR</p>
+        </th>
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">DEVUELTO</p>
+        </th>
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">PAGADO</p>
+        </th>
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">SALDO</p>
+        </th>
+
+        {% if is_granted('ROLE_SUPER') %}
+            <th class="p-1 text-right"></th>  
+        {% endif %}
+        
+    </tr>
+</thead>
+<tbody>
+    {% set TOTAL_VALOR = 0 %}
+    {% set TOTAL_DEVUELTO = 0 %}
+    {% set TOTAL_PAGADO = 0 %}
+    {% set TOTAL_SALDO = 0 %}
+
+    {% for factura in facturas %}
+        
+        {% set TOTAL_VALOR      = TOTAL_VALOR + factura.valorProductos %}
+        {% set TOTAL_DEVUELTO   = TOTAL_DEVUELTO + factura.valorDevuelto %}
+        {% set TOTAL_PAGADO     = TOTAL_PAGADO + factura.valorPagado %}
+        {% set TOTAL_SALDO      = TOTAL_SALDO + factura.saldo %}
+
+        <tr class="small p-0"> 
+
+            <td class="p-1" colspan="1" title="{{ factura.createdAt|date('d/m/Y h:i:s a') }} | {{ factura.createdAt|fecha }}"> 
+                <p class="m-0" >{{factura.fecha|date('d/m')}}</p>
+            </td>
+ 
+            <td class="p-1" colspan="1"> 
+                <a 
+                    href="{{url('factura_editar',{'slug':factura.slug})}}" 
+                    class=""
+                ><p class="m-0" >{{"%04d"|format(factura.id)}}</p>
+                </a>
+            </td>
+
+            <td class="p-1 text-right" colspan="1" title="ID#{{"%04d"|format(factura.id)}}">
+                <p class="m-0"><strong>{{"%04d"|format(factura.numero)}}</strong></p>
+            </td>
+            
+            <td class="p-1" colspan="1">
+                <p class="m-0">{{factura.usuario.nombre|slice(0,4)|upper}}</p>
+            </td>
+
+            <td class="p-1" colspan="1">
+                <a 
+                    href="{{url('cliente_editar',{'slug':factura.cliente.slug})}}" 
+                    class=""
+                >
+                    <p class="m-0"><strong>{{factura.cliente.negocio|slice(0,18) }}</strong></p>
+                    {# <p class="m-0 small"> {{ (factura.cliente.nombre)|slice(0,22)}}</p> #}
+                    {#  <p class="m-0 small"> {{factura.cliente.direccion|slice(0,22)}}</p> #}
+                </a>
+            </td>
+
+            <td class="p-1 text-right" colspan="1">
+                <p class="m-0 ">{{factura.formapago|slice(0,18) }} Dias</p> 
+            </td>
+
+
+            <td class="p-1" colspan="1">
+                <p class="m-0">{{factura.estado}}</p>
+            </td>
+
+            <td class="p-1 text-right text-truncate" colspan="1">
+                <p class="m-0"><strong>{{factura.valorProductos|number_format(2)}}</strong></p>
+            </td>
+
+            <td class="p-1 text-right text-truncate" colspan="1">
+                <p class="m-0"><strong>{{factura.valorDevuelto|number_format(2)}}</strong></p>
+            </td>
+
+            <td class="p-1 text-right text-truncate" colspan="1">
+                <p class="m-0"><strong>{{factura.valorPagado|number_format(2)}}</strong></p>
+            </td>
+
+            <td class="p-1 text-right text-truncate" colspan="1">
+                <p class="m-0">{{factura.saldo|number_format(2)}}</p>
+            </td> 
+        </tr>		
+    {% endfor %}
+</tbody> 
+
+<tfooter>
+    <tr class="small p-0">
+        <td class="p-1 text-right pr-5" colspan="7">TOTAL C$</td>
+        <td class="p-1 text-right" colspan="1">{{TOTAL_VALOR|number_format(2)}}</td>
+        <td class="p-1 text-right" colspan="1">-<strong>{{TOTAL_DEVUELTO|number_format(2)}}</strong></td>
+        <td class="p-1 text-right" colspan="1">{{TOTAL_PAGADO|number_format(2)}}</td>
+        <td class="p-1 text-right" colspan="1"><strong>{{TOTAL_SALDO|number_format(2)}}</strong></td>
+    </tr>
+</tfooter>

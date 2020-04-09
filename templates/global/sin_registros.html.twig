@@ -1,0 +1,12 @@
+{% block sin_registros %}
+<div class="row ">
+    <div class="col-sm-12 text-center">
+        <div class="card card-body bg-ligth">
+            <p class="lead text-bold m-0">¡No hay registros que mostrar!</p>
+        </div>
+        <a href="{{url(route ~ '_editar')}}" class="btn btn-secondary btn-lg m-4">
+            <i class="fa fa-edit"></i> Nuevo 
+        </a>
+    </div>
+</div> 
+{% endblock %}

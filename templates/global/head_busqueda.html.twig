@@ -1,0 +1,33 @@
+{% if search is defined %}
+    <form class="w-100" action="{{ url(route ~'_listar',{"page":1}) }}" method="GET">
+        <div class="form-group form-group-md w-100" >
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    {% if search and search != "clear" %}
+                        <a 
+                            href="{{ url(route ~'_listar',{"page":1,"search":"clear"}) }}"
+                            class="input-group-text btn btn-outline-default"
+                        >
+                            <i class="fa fa-trash fa-xs text-danger"></i>
+                        </a>
+                    {% endif %}
+                </div>
+                <input
+                    name="search"
+                    type="text"
+                    id="search"
+                    name="search"
+                    value="{{ search }}"
+                    class="form-control search-field form-control-md "
+                    placeholder="| Búscar"
+                    autofocus
+                >
+                <div class="input-group-append">
+                    <button class="input-group-text btn btn-outline-default" type="submit">
+                        <i class="fa fa-search fa-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endif %} 

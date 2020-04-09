@@ -1,0 +1,62 @@
+<nav class="navbar navbar-dark navbar-expand-lg sombra static-top mb-3 bg-primary" role="navigation"> 
+	
+	<div class="container-fluid">
+		<a class="navbar-brand" href="{{url('index')}}">
+			<p class="text-white m-0">
+				<img style="img-responsive img-" src="{{asset('ap_logo_invertido.png')}}" alt="LOGO" height="30"> 
+				{# <strong class="p-0 pt-1">A%P</strong> #}
+			</p>
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        	<span class="navbar-toggler-icon"></span>
+        </button>
+	</div>
+ 
+	<div class="collapse navbar-collapse" id="navbarResponsive">
+		<ul class="navbar-nav">  
+
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<li class="nav-item"> 
+					<a  
+						class="nav-link m-2 p-3 text-truncate" 
+						href="{{url('resumen')}}"
+					>
+						<i class="fa fa-poll"></i> Dashboard
+					</a>  
+				</li>
+
+				<li class="nav-item">
+					<div class="nav-link  m-2 p-3 dropdown">
+						<a class="dropdown-toggle  text-truncate" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-hamburger"></i> Menu
+						</a>
+						<div class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton" id="menusecundario"> 
+							{{ render(controller( 'App\\Controller\\DefaultController::menuapp',{ 'display':'dropdow', 'route': route })) }}
+						</div>
+					</li>
+				</li> 
+			{% endif %}
+
+			<li class="nav-item">
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					<div class="nav-link m-2 p-3 dropdown">
+						<a class="dropdown-toggle  text-truncate" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fa fa-user"></i> {{app.user.nombre|upper}}
+						</a>
+						<div class="dropdown-menu p-0" aria-labelledby="dropdownMenuButton" id="menuprincipal">
+							{% include "global/menu/menu-user.html.twig" %}
+						</div>
+					</div>
+				{% else %}
+					<a  
+						href="{{url('app_login')}}"
+						class="nav-link m-2 p-3 text-truncate"
+					>
+						<i class="fa fa-user"></i> Login
+					</a>
+				{% endif %}
+			</li>
+
+		</ul>
+	</div> 
+</nav>

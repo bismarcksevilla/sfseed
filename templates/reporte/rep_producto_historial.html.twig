@@ -1,0 +1,164 @@
+{% extends "reporte/plantilla.html.twig" %} 
+
+{% block addstyle %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}{{producto.nombre|upper}}{% endblock %}
+
+{% block subtitle %}HISTORIAL DE PRODUCTO{% endblock %} 
+
+{% block body %}
+ 
+<div class="row">
+    <div class="col-6">
+        <div class="card card-body p-0">
+            <table class="table table-sm m-0">
+                <tr>
+                    <td><p class="m-0 text-right">Producto:</p></td>
+                    <td><p class="m-0 text-left"><strong>{{producto.nombre}}</strong></p></td> 
+                </tr>
+                <tr>
+                    <td><p class="m-0 text-right">Descripcion:</p></td>
+                    <td><p class="m-0 text-left"><strong>{{producto.descripcion}}</strong></p></td> 
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card card-body p-0">
+            <table class="table table-sm m-0">
+                <tr>
+                    <td><p class="m-0 text-right">Moneda:</p></td>
+                    <td>
+                        <p class="m-0 text-left">
+                            <strong>
+                                {% if producto.moneda == "C$" %}CORDOBAS {% else %} DOLARES {% endif %}
+                                
+                            </strong>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><p class="m-0 text-right">Creado:</p></td>
+                    <td><p class="m-0 text-left"><strong>{{producto.createdAt|date}}</strong></p></td> 
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+ <div class="row">
+    <div class="col-12">
+        <div class="card card-body p-0 mt-3">
+            <table class="table table-sm table-bordered m-0">
+                <thead>
+                    <tr>
+                        <th class="text-center" colspan="2">INVENTARIO</th>
+                        <th class="text-center" colspan="2">VENTA</th>
+                        <th class="text-center" colspan="2">COMPRA</th>
+                        <th class="text-center" colspan="2">UTILIDAD</th>
+                    </tr>
+                    <tr>
+                        <th class="text-left">SUCURSAL</th>
+                        <th class="text-right">CANTIDAD</th>
+                        <th class="text-right">UNITARIO</th>
+                        <th class="text-right">TOTAL</th>
+                        <th class="text-right">UNITARIO</th>
+                        <th class="text-right">TOTAL</th>
+                        <th class="text-right">UNITARIO</th>
+                        <th class="text-right">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set CANTIDAD_TOTAL = 0 %}
+                    {% set VALOR_TOTAL = 0 %}
+                    {% set COSTO_TOTAL = 0 %}
+                    {% for e in producto.existencias %}
+                        {% set TOTAL = e.valor * e.existencia %}
+                        {% set CTOTAL = e.costo * e.existencia %}
+                        {% set CANTIDAD_TOTAL = CANTIDAD_TOTAL + e.existencia %}
+                        {% set VALOR_TOTAL = VALOR_TOTAL + TOTAL %}
+                        {% set COSTO_TOTAL = COSTO_TOTAL + CTOTAL %}
+                        <tr>
+                            <td><p class="m-0 text-left">{{e.sucursal.prefijo}} - {{e.sucursal.nombre}}</p></td>
+                            <td><p class="m-0 text-right">{{e.existencia}} {{producto.presentacion.medida}}</p></td>
+                            <td><p class="m-0 text-right">{{producto.moneda}} {{e.valor|number_format(2)}}</p></td>
+                            <td><p class="m-0 text-right">{{producto.moneda}} {{TOTAL|number_format(2)}}</p></td>
+                            <td><p class="m-0 text-right">{{producto.moneda}} {{e.costo|number_format(2)}}</p></td>
+                            <td><p class="m-0 text-right">{{producto.moneda}} {{CTOTAL|number_format(2)}}</p></td>
+                            <td><p class="m-0 text-right">{{producto.moneda}} {{(e.valor - e.costo)|number_format(2)}}</p></td>
+                            <td><p class="m-0 text-right">{{producto.moneda}} {{(TOTAL - CTOTAL)|number_format(2)}}</p></td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td><p class="m-0 text-right">TOTAL</p></td>
+                        <td><p class="m-0 text-right"><strong>{{CANTIDAD_TOTAL}} {{producto.presentacion.medida}}</strong></p></td>
+                        <td colspan="2"><p class="m-0 text-right" ><strong>{{producto.moneda}} {{VALOR_TOTAL|number_format(2)}}</strong></p></td>
+                        <td colspan="2"><p class="m-0 text-right" ><strong>{{producto.moneda}} {{COSTO_TOTAL|number_format(2)}}</strong></p></td>
+                        <td colspan="2"><p class="m-0 text-right" ><strong>{{producto.moneda}} {{(VALOR_TOTAL - COSTO_TOTAL)|number_format(2)}}</strong></p></td>
+                    </tr>
+                </tbody>
+            </table>  
+        </div>
+    </div>
+ </div>
+
+
+    <table class="table table-sm mt-3">
+        <tr class=""> 
+            <th class="p-1" >
+                <p class="m-0">#</p>
+            </th> 
+            <th class="p-1" >
+                <p class="m-0">FECHA</p>
+            </th> 
+            <th class="p-1">
+                <p class="m-0 text-left">ACTIVIDAD</p>
+            </th>  
+            <th class="p-1">
+                <p class="m-0 text-right">CANTIDAD</p>
+            </th>  
+            {# <th class="p-1">
+                <p class="">EXISTENCIA</p>
+            </th>   #}
+            <th class="p-1">
+                <p class="m-0 text-left">NOTA</p>
+            </th>  
+        </tr>
+
+
+        {% for e in producto.historial %}
+        
+            <tr class=""> 
+                <td class="" colspan="1">
+                    <p class="m-0">{{loop.index}}
+                    {# <a href="{{url('factura_editar',{'slug':e.slug})}}" target="blank" class=" r">{{e.id}}</a> #}
+                </td>
+
+                <td class="" colspan="1">
+                    <p class="m-0">{{e.fecha|date}}</p>
+                </td>
+
+                <td class="" colspan="1">
+                    <p class="m-0 text-left">{{e.actividad}}</p>
+                </td>
+
+                <td class="" colspan="1">
+                    <p class="m-0 text-right">{{e.cantidad}}</p>
+                </td>
+
+                {# <td class="" colspan="1">
+                    <p class="m-0">{{e.existencia}}</p>
+                </td> #}
+
+                <td class="" colspan="1">
+                    <p class="m-0 text-left">{{e.nota}}</p>
+                </td>
+  
+            </tr>  		
+        {% endfor %}
+    </table>
+
+{% endblock %} 

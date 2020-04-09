@@ -1,0 +1,9 @@
+{% for key, item in menu %}
+    <a
+        class="dropdown-item 
+        {% if item.route == (route ~ "_listar")  or item.route == route %} active  disabled{% endif %}" 
+        href="{{url(item.route)}}" 
+    >
+        <i class="fa fa-{{item.icon}}"></i> {{key}}
+    </a>    
+{% endfor %}

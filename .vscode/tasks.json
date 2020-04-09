@@ -1,0 +1,47 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "ssh",
+            "type": "shell",
+            "command": "ssh arguell2@arguellopereyra.com.ni",
+            "problemMatcher": []
+        },
+        {
+            "label": "assets",
+            "type": "shell",
+            "command": "yarn run encore dev --watch",
+            "auto": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "server",
+            "type": "shell",
+            "command": "symfony server:start --document-root='public_html'",
+            "auto": true
+        }, 
+        {
+            "label": "dump routes",
+            "type": "shell",
+            "command": "php bin/console fos:js-routing:debug", 
+        },
+        {
+            "label": "inicializar",
+            "dependsOn": [
+                "assets",
+                "server",
+                
+            ],
+            "problemMatcher": [
+                "$go"
+            ]
+        }
+    ]
+}
+/*
+ * db: raymondr_libreria_cristian
+ * db user: raymondr_libreria_cristian 
+ * db pass: A7pC2xVicSY[
+ */

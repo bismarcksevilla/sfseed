@@ -1,0 +1,113 @@
+<thead class="thead-inverse">
+    <tr class="small">  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">FECHA</p>
+        </th>  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">P.ID</p>
+        </th>  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">O.P.</p>
+        </th>
+        <th class="p-1 text-left">
+            <p class="m-0 text-muted">RECIBE</p>
+        </th>
+        <th class="p-1 text-left">
+            <p class="m-0 text-muted">CLIENTE</p>
+        </th>
+        <th class="p-1 text-left">
+            <p class="m-0 text-muted">TRANS</p>
+        </th>
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">VALOR</p>
+        </th>
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">PAGADO</p>
+        </th>  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">SALDO</p>
+        </th>   
+    </tr>
+</thead>
+<tbody>
+    {% set TOTAL_PAGADO = 0 %}
+    {% set TOTAL_PRODUCTOS = 0 %}
+    {% set TOTAL_SALDO = 0 %}
+
+    {% for pago in pagos %}
+        
+        {% set TOTAL_PAGADO = TOTAL_PAGADO + pago.valor %}
+        {% set TOTAL_PRODUCTOS = TOTAL_PRODUCTOS + pago.factura.valorProductos %}
+        {% set TOTAL_SALDO 	= TOTAL_SALDO + pago.factura.saldo %}
+
+        <tr class="small p-0"> 
+
+            <td class="p-1" colspan="1" title="{{ pago.createdAt|date('d/m/Y h:i:s a') }} | {{ pago.createdAt|fecha }}"> 
+                <p class="m-0" >{{pago.createdAt|date('d/m')}}</p>
+            </td>
+
+            <td class="p-1" colspan="1"> 
+                <a 
+                    {% if is_granted('ROLE_SUPER') %} 
+                        href="{{url('pago_editar',{'slug':pago.slug})}}" 
+                    {% endif %}
+                    class=""
+                >
+                    <p class="m-0" >{{"%04d"|format(pago.id)}}</p>
+                </a>
+            </td>
+
+            <td class="p-1 text-right" colspan="1" title="FID#{{"%04d"|format(pago.factura.id)}}">
+                {% if pago.factura.numero is defined and pago.factura.numero > 0 %}
+                    <a 
+                        href="{{url('factura_editar',{'slug':pago.factura.slug})}}" 
+                        class=""
+                    >
+                        <p class="m-0"><strong>{{"%04d"|format(pago.factura.numero)}}</strong></p>
+                    </a>
+                {% else %}
+                    <p class="m-0">[DIR.]</p>
+                {% endif %}
+            </td>
+            
+            <td class="p-1" colspan="1">
+                <p class="m-0">{{pago.usuario.nombre|slice(0,4)|upper}}</p>
+            </td>
+
+            <td class="p-1" colspan="1">
+                <a 
+                    href="{{url('cliente_editar',{'slug':pago.factura.cliente.slug})}}" 
+                    class=""
+                >
+                    <p class="m-0"><strong>{{pago.factura.cliente.negocio|slice(0,18) }}</strong></p>
+                    {# <p class="m-0 small"> {{ (pago.factura.cliente.telefono ~ pago.factura.cliente.nombre)|slice(0,22)}}</p> #}
+                    {#  <p class="m-0 small"> {{pago.factura.cliente.direccion|slice(0,22)}}</p> #}
+                </a>
+            </td>
+
+            <td class="p-1" colspan="1">
+                <p class="m-0">{{pago.transaccion|slice(0,3)}}</p>
+            </td>
+
+            <td class="p-1 text-right" colspan="1">
+                <p class="m-0">{{pago.factura.valorProductos|number_format(2)}}</p>
+            </td>
+
+            <td class="p-1 text-right text-truncate" colspan="1">
+                <p class="m-0"><strong>{{pago.valor|number_format(2)}}</strong></p>
+            </td>
+
+            <td class="p-1 text-right" colspan="1">
+                <p class="m-0">{{pago.factura.saldo|number_format(2)}}</p>
+            </td>
+        </tr>		
+    {% endfor %}
+</tbody> 
+<tfooter>
+    <tr class="small p-0">
+        <td class="p-1 text-right pr-5" colspan="6">TOTAL C$</td>
+        <td class="p-1 text-right" colspan="1"><strong>{{TOTAL_PRODUCTOS|number_format(2)}}</strong></td>
+        <td class="p-1 text-right" colspan="1"><strong>{{TOTAL_PAGADO|number_format(2)}}</strong></td>
+        <td class="p-1 text-right" colspan="1">{{TOTAL_SALDO|number_format(2)}}</td>
+    </tr>
+</tfooter>

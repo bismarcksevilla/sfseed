@@ -1,0 +1,65 @@
+ <!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="robots" content="all,follow">
+        
+        {# <meta property="ga:tracking" content="{{gg_id}}" /> #}
+        
+        <title>{% block title %}ARGUELLO & PEREIRA{% endblock %}</title>
+        
+        {% block og %}
+            <link  rel="canonical" href="{{absolute_url(url('index'))}}">
+            <meta property="og:type" content="website" />
+            <meta property="og:title" content="{{block('title')}}" />
+            <meta property="og:description" content="{{block('description')}}" />
+            <meta property="og:url" content="{{ absolute_url(url("index"))}}" />
+            {# <meta property="og:image" content="{{ absolute_url(asset('/portada.jpg' ))}}" title=/> #}
+            <meta name="description" content="{% block description %}A&P | ARGUELLO PEREYRA Y ASOCIADOS {% endblock %}">
+        {% endblock %}
+        {% block meta %}{% endblock %}
+
+        {# {% include "global/analitycs.html.twig" %} #}
+        
+        <link rel="stylesheet" type="text/css" href="/build/app.css">
+        
+        {# {{ encore_entry_link_tags('app') }} #}
+        
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="mosaico-x">
+        
+        {% set route  = (app.request.get('_route')|split('_')).0 %}
+        {% if (app.request.get('_route')|split('_')).1  is defined %}
+            {% set action = (app.request.get('_route')|split('_')).1 %}
+        {% else %}
+            {% set action = ''  %}
+        {% endif %}
+
+        {% block body %}
+
+            {% block hero %}{% endblock %}
+            
+            {% block nav %}
+                {% include "global/nav.html.twig" %}
+            {% endblock %}
+
+            {% block flashes %}
+                {% include "global/flash.html.twig" %}
+            {% endblock %}
+
+            {% block main %}{% endblock %}
+
+            {% block foo %}
+                {% include "global/foo.html.twig" %}
+            {% endblock %}
+
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
+</html>

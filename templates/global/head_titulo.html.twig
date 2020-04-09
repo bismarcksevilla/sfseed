@@ -1,0 +1,15 @@
+
+{% if action == "listar" %}
+    <h2>{{action|upper}} {{route|upper}}</h2>
+{% endif %}
+
+{% if action == "editar" %}
+    {% if app.request.get('slug') is defined and app.request.get('slug')|length > 0 %}
+        <h2>{{action|upper}} {{route|upper}} 
+            <small 
+                class="badge badge-primary badge-sm small rounded-sm"
+                style="font-size:12px; position:relative; top:-15px;"
+            >ID-{{ "%06d"|format(form.vars.value.id)}}</small></h2>    {% else %}
+        <h2>CREAR {{route|upper}}</h2>
+    {% endif %}
+{% endif %}   

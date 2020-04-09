@@ -1,0 +1,31 @@
+{% extends "reporte.html.twig" %} 
+
+{% block title %}Reporte {{fecha}} {% endblock %}
+
+{% block subtitle %} {% endblock %} 
+
+{% block table %}
+
+
+	<p class="m-0 mt-2"><i class="fa fa-money-bill-wave fa-xs"></i> Pagos</p>
+	<div class="table-responsive">
+		<table class="table w-100 d-block d-lg-table table-responsive table-responsive-lg ">
+			{% include "reporte/tab/pagos.html.twig" %}
+		</table>  
+	</div>
+
+	<p class="m-0 mt-2"><i class="fa  fa-box fa-xs"></i> Consignado</p>
+    <div class="table-responsive">
+		<table class="table w-100 d-block d-lg-table table-responsive table-responsive-lg ">
+			{% include "reporte/tab/consignaciones.html.twig" %}
+		</table>
+	</div>
+
+	<p class="m-0 mt-2"><i class="fa  fa-recycle fa-xs"></i> Devoluciones</p>
+    <div class="table-responsive">
+		<table class="table w-100 d-block d-lg-table table-responsive table-responsive-lg ">
+			{% include "reporte/tab/devoluciones.html.twig" %}
+		</table>
+	</div>
+
+{% endblock %}

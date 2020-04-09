@@ -1,0 +1,52 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    line-height: 4mm;
+    font-size:14;
+}
+
+body{
+    max-width: 80mm;
+    margin-top: 5mm
+}
+
+
+.text-bold{
+    font-weight: bold;
+}
+.small{
+    font-size: 12px;
+}
+
+.c{ text-align: center; }
+.l{ text-align: left; }
+.r{ text-align: right; }
+
+.bb{
+    border-bottom:1px solid black; 
+}
+.bt{
+    border-top:1px solid black; 
+}
+
+table{
+    width: 100%;
+}
+
+hr{
+    margin:5px;
+}
+
+h1{ font-size: 16px;}
+
+
+body.carta{
+    max-width: 270mm;
+    margin-top: 5mm;
+    padding: 20px;
+}
+body.carta p{
+    font-size:13px;
+    padding:3px;
+}

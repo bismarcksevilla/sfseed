@@ -1,0 +1,185 @@
+{% extends 'form.html.twig' %}
+
+{% block title %}Editar Usuario{% endblock %}
+
+{% block cont_form %} 
+    <div class="row"> 
+
+        <div class="col-md-6 col-lg-4">
+            <div class="form-group form-group-lg">
+                <label class="small m-0">Nombre</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-bold bg-white">
+                            <i class="fa fa-edit"></i>
+                        </span>
+                    </div>
+                    {{ form_widget(form.nombre) }}
+                </div>
+                <div class="form_errors small">{{ form_errors(form.nombre) }}</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+                <label class="small m-0">Segundo Nombre</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-bold bg-white">
+                            <i class="fa fa-edit"></i>
+                        </span>
+                    </div>
+                    {{ form_widget(form.nombre2) }}
+                </div>
+                <div class="form_errors small">{{ form_errors(form.nombre2) }}</div>
+            </div>
+        </div> 
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+                <label class="small m-0">Apellido</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-bold bg-white">
+                            <i class="fa fa-edit"></i>
+                        </span>
+                    </div>
+                    {{ form_widget(form.apellido) }}
+                </div>
+                <div class="form_errors small">{{ form_errors(form.apellido) }}</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+                <label class="small m-0">Segundo Apellido</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-bold bg-white">
+                            <i class="fa fa-edit"></i>
+                        </span>
+                    </div>
+                    {{ form_widget(form.apellido2) }}
+                </div>
+                <div class="form_errors small">{{ form_errors(form.apellido2) }}</div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="row">
+        <div class="col-md-6 col-lg-4">
+            <div class="form-group">
+                <label class="small m-0">Teléfono</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-bold bg-white">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                    </div>
+                    {{ form_widget(form.telefono) }}
+                </div>
+                <div class="form_errors small">{{ form_errors(form.telefono) }}</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-6 col-lg-6">
+            <div class="form-group">
+                <label class="small m-0">Correo Electrónico</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-bold bg-white">
+                            <i class="fa fa-mail-bulk"></i>
+                        </span>
+                    </div>
+                    {{ form_widget(form.email) }}
+                </div>
+                <div class="form_errors small">{{ form_errors(form.email) }}</div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="alert alert-primary">
+                <p class="m-0">Preste atención al rol de cada usuario, esta configuración establece el nivel de acceso a la información.</p>
+                <div class="table-responsive">
+                    <table class="table table-sm d-block w-100">
+                        {# <thead class="">
+                            <tr>
+                                <th class="text-muted small">ROL</th>
+                                <th class="text-muted small">DESCRIPCION</th>
+                            </tr>
+                        </thead> #}
+                        <tbody class="small">
+                            <tr class="">
+                                <td class="">USUARIO</td>
+                                <td class="">
+                                    <ul class="m-0">
+                                        <li>Rol por defecto en usuarios registrados.</li>
+                                        <li>Acceso limitado.</li>
+                                        <li>Puede editar su información personal.</li>
+                                    </ul>
+                                </td> 
+                            </tr>
+                            <tr class="">
+                                <td class="">COLABORADOR</td>
+                                <td class="">
+                                    <ul class="m-0">
+                                        <li>Acceso general al sistema.</li>
+                                        <li>Acceso a los módulos comunes.</li>
+                                    </ul>
+                                </td> 
+                            </tr>
+                            <tr class="">
+                                <td class="">ADMIN</td>
+                                <td class="">
+                                    <ul class="m-0">
+                                        <li>Administrar Usuarios</li>
+                                        <li>Acceso a la auditoria del sistema</li>
+                                    </ul>
+                                </td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="small m-0">Nivel de Acceso</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-bold bg-white">
+                            <i class="fa fa-user-lock"></i>
+                        </span>
+                    </div>
+                    {{ form_widget(form.role) }}
+                </div>
+                <div class="form_errors small">{{ form_errors(form.role) }}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="small m-0">Estado</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text text-bold bg-white">
+                            <i class="fa fa-unlock-alt"></i>
+                        </span>
+                    </div>
+                    {{ form_widget(form.estado) }}
+                </div>
+                <div class="form_errors small">{{ form_errors(form.estado) }}</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

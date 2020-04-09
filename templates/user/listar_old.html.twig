@@ -1,0 +1,131 @@
+{% extends 'listar.html.twig' %}
+
+{% block title %}Administrar Usuarios{% endblock %}
+
+{% block main %}
+<section class="container">
+
+    <div class="row">
+        <div class="col-sm-6 tags">
+            <h2>Administrar Usuarios</h2>
+        </div>
+        <form class="col-sm-6" action="{{ url('usuario_listar',{"page":1}) }}" method="GET">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button class="input-group-text btn btn-outline-default">Buscar:</button>
+                    </div>
+                    <input
+                        name="search"
+                        type="text"
+                        id="search"
+                        name="search"
+                        value="{{ search }}"
+                        class="form-control search-field has-warning"
+                        placeholder="| Nombre, apellido"
+                        autofocus
+                    >
+                    <div class="input-group-append">
+                        <button class="input-group-text btn btn-outline-default" type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>{# row #}
+
+
+    {% if pagina|length > 0  %}
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-sm table-hover table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr  class="text-center">
+
+                            <th scope="col"></th>
+
+                            <th scope="col">
+                                {{ knp_pagination_sortable(pagina, 'Nombre', 'u.nombre') }}
+                                {% if pagina.isSorted('u.nombre') %}<i class="fa fa-sort"></i>{% endif %}
+                            </th> 
+
+                            <th scope="col">
+                                {{ knp_pagination_sortable(pagina, 'Acceso/Rol', 'u.role') }}
+                                {% if pagina.isSorted('u.role') %}<i class="fa fa-sort"></i>{% endif %}
+                            </th>
+                            
+                            <th scope="col">
+                                {{ knp_pagination_sortable(pagina, 'Sucursal', 's.sucursal') }}
+                                {% if pagina.isSorted('s.sucursal') %}<i class="fa fa-sort"></i>{% endif %}
+                            </th>
+
+                            <th scope="col">
+                                <p class="m-0 text-primary">Medico</p>
+                            </th>
+ 
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                    {% for usuario in  pagina  %}
+
+                        <tr class="sombrain" data-url="{{url('usuario_editar', {'slug':usuario.slug})}}">
+
+                            <td class="align-middle">
+                                <a class="btn btn-outline-dark btn-sm" href="{{url('usuario_editar',{'slug':usuario.slug})}}"><i class="fa fa-edit"></i> Editar</a>
+                            </td>
+
+                            <td class="align-middle abrir text-center" >
+                                {# <p class="m-0">{{usuario.prefijo}} {{usuario.nombre}} {{usuario.apellido}}</p> #}
+                            </td>
+
+                            <td class="align-middle abrir text-center" >
+                                <p class="m-0">{{usuario.role|replace({'ROLE_':''})}}</p>
+                            </td>
+
+                            <td class="align-middle abrir text-center" >
+                                {# <p class="m-0">{{usuario.sucursal.nombre}}</p> #}
+                            </td>
+
+                            <td class="align-middle abrir text-center" >
+                                {# {% if usuario.doctor %} <i class="fa fa-medkit"></i> {% endif %} #}
+                            </td>
+ 
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>{# row #}
+
+        <div class="row ">
+            <div class="col-sm-9">
+                <div class="navigation">
+                    {{ knp_pagination_render(pagina) }}
+                </div>
+            </div>
+            <div class="col-sm-3 text-right">
+                <p>{{ pagina.getTotalItemCount }} Registros Encontrados </p>
+            </div>
+        </div>{# row #}
+
+        <div class="row">
+            <div class="col-sm-12 text-center m-3">
+                <a class="btn btn-lg btn-dark" href="{{url('usuario_editar')}}"><i class="fa fa-newspaper-o"></i> Crear nuevo usuario</a>
+            </div>
+        </div>{# row #}
+
+    {% else %}
+        <div class="row ">
+            <div class="col-sm-12 text-center">
+                <div class="card card-body p-2 m-1 bg-ligth">
+                    <p class="lead text-bold m-0">¡No hay registros que mostrar!</p>
+                </div>
+                <a href="{{url('usuario_editar')}}" class="btn btn-primary m-4"><i class="fa fa-edit"></i> Agregar Nuevo </a>
+            </div>
+        </div>{# row #}
+    {% endif %}
+
+</section>
+{% endblock %}

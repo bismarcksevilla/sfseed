@@ -1,0 +1,75 @@
+{% extends 'app.html.twig' %}
+
+{% block panel %}
+
+    
+
+    {% if pagina|length <= 0  %}
+        {% include "global/sin_registros.html.twig" %}
+    {% else %} 
+            <table 
+                class="table w-100 d-block d-sm-table table-responsive table-responsive-sm"
+                role="table"
+            >
+                <thead class="thead-primary">
+                    <tr  class="text-center p-0">
+                        
+                        <th scope="col"></th>
+
+                        {% block listar_head %}{% endblock %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in  pagina  %}
+
+                        {% block listar_for_all %}
+                            
+                        <tr 
+                            class="sombrain p-0" 
+                            data-url="{{url( route ~ '_editar', {'slug': row.slug})}}"
+                        >
+                            <td class="align-middle abrir p-0">
+                                <div class="btn-group">
+                                    <a
+                                        class="dropdown-toggle text-muted p-1" 
+                                        type="button" 
+                                        data-toggle="dropdown" 
+                                        aria-haspopup="true" 
+                                        aria-expanded="false"
+                                    >
+                                        <i class="fa fa-cogs fa-xs"></i>
+                                    </a>
+                                    <div class="dropdown-menu p-0">
+                                        <a 
+                                            class="dropdown-item py-2" 
+                                            href="{{url( route ~ '_editar',{'slug':row.slug})}}"
+                                        > 
+                                            <i class="fa fa-pencil-alt"></i> Editar
+                                        </a> 
+                                        <a    
+                                            class="dropdown-item py-2 text-danger" 
+                                            onClick="return confirm('¿Seguro que desea eliminar este elemento?')"
+                                            href="{{url( route ~ '_eliminar',{'slug':row.slug})}}"
+                                        > 
+                                            <i class="fa fa-trash"></i> Eliminar
+                                        </a>
+                                        {% block item_option %}{% endblock %}
+                                    </div>
+                                </div> 
+                            </td>
+
+                            {% block listar_for %}{% endblock %}
+                        </tr>
+                        
+                        {% endblock %}
+                    {% endfor %}
+                </tbody>
+            </table>  
+
+        {% include "global/paginacion.html.twig"%}
+
+    {% endif %} 
+
+    {% block anexar %}{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Seleccione reporte{% endblock %}
+
+{% block main %}
+<section class="container mb-4">
+
+    <div class="row">
+        <div class="col-12">
+            <h2>Seleccione Reporte</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 card card-body bg-lite sombra">
+
+            {{ form_start(form) }}
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Reporte</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-lite text-bold bg-white">
+                                    <i class="fa fa-question"></i>
+                                </span>
+                            </div>
+                            {{ form_widget(form.nombre) }}
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Fecha</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-lite text-bold bg-white">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                            {{ form_widget(form.fecha) }}
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Formato</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-lite text-bold bg-white">
+                                    <i class="fa fa-file"></i>
+                                </span>
+                            </div>
+                            {{ form_widget(form.formato) }}
+                        </div>
+                    </div>
+                </div> 
+
+            </div> 
+            <div class="row">
+                 <div class="col-12">
+                        {{ form_row(form.generar) }}
+                </div> 
+            </div>
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    {% set id_token = "ID_"~ random(50, 100)  %}
+                    {# {% set id_token = "ID_"  %} #}
+                    <div class="alert alert-{{ label }} text-center sombra"  id="{{id_token}}">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <p class="m-1">{{ message }}</p>
+                        <script type="text/javascript">
+                            setTimeout(function() {
+                                document.getElementById('{{id_token}}').style.display='none';
+                            },15000);  
+                        </script>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

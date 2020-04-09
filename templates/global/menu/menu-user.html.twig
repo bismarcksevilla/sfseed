@@ -1,0 +1,26 @@
+{% if is_granted('ROLE_USER') %}
+    <a  
+        class="dropdown-item text-truncate" 
+        {# href="{{url('panel')}}" #}
+    >
+        <i class="fa fa-user"></i> Mi Perfil
+    </a>
+{% endif %}
+
+{% if is_granted('ROLE_SUPER') %}
+    <a  
+        class="dropdown-item text-truncate" 
+        {# href="{{url('cita_listar')}}" #}
+    >
+        <i class="fa fa-tools"></i> {{app.user.role}}
+    </a>
+{% endif %}
+
+<div class="dropdown-divider m-0"></div>
+
+<a  
+    class="dropdown-item text-truncate" 
+    href="{{url('app_logout')}}"
+>
+    <i class="fa fa-user-lock"></i> Salir
+</a>

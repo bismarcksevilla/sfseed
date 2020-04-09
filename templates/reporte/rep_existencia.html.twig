@@ -1,0 +1,62 @@
+{% extends "reporte/plantilla.html.twig" %} 
+
+{% block title %}REPORTE DE EXISTENCIAS{% endblock %}
+
+{% block subtitle %} {% endblock %} 
+
+{% block table_head %}
+    <tr class="small"> 
+		<th class="p-0 bt bb" >
+			<p class="small m-0 pr-2 r"><strong>#</strong></p>
+		</th> 
+		<th class="p-0 bt bb" >
+			<p class="small m-0 pr-2 c"><strong>PRODUCTO</strong></p>
+		</th> 
+		<th class="p-0 bt bb">
+			<p class="small m-0 pr-2 c"><strong>SUCURSAL</strong></p>
+		</th> 
+		<th class="p-0 bt bb" colspan="2">
+			<p class="small m-0 pr-2 c"><strong>EXISTENCIA</strong></p>
+		</th> 
+		<th class="p-0 bt bb">
+			<p class="small m-0 pr-2 c"><strong>MONEDA</strong></p>
+		</th> 
+		<th class="p-0 bt bb">
+			<p class="small m-0 pr-2 c"><strong>COSTO</strong></p>
+		</th> 
+		<th class="p-0 bt bb">
+			<p class="small m-0 pr-2 c"><strong>VALOR</strong></p>
+		</th> 
+		<th class="p-0 bt bb">
+			<p class="small m-0 pr-2 c"><strong>UTILIDAD</strong></p>
+		</th> 
+	</tr>
+{% endblock %}
+
+{% block table_for %}
+ 
+	{% for e in pagina %}
+		<tr class="small"> 
+			<td class="bb" colspan="1"><p class="small r"><small>{{loop.index}}</small></p></td>
+
+			<td class="bb" colspan="1"><p class="small l"><small>{{e.producto.nombre|upper}}</small></p></td>
+
+			<td class="bb" colspan="1"><p class="small l"><small>{{e.sucursal.prefijo}}</small></p></td>
+
+			<td class="bb" colspan="1"><p class="small r"><small>{{e.existencia}} </small></p></td>
+			
+			<td class="bb" colspan="1"><p class="small l"><small>{{e.producto.presentacion.medida}}</small></p></td>
+
+			<td class="bb" colspan="1"><p class="small r"><small>{{e.producto.moneda}} </small></p></td>
+
+			<td class="bb" colspan="1"><p class="small r"><small>{{e.costo|number_format(2)}}</small></p></td>
+
+			<td class="bb" colspan="1"><p class="small r"><small>{{e.valor|number_format(2)}}</small></p></td>
+
+			<td class="bb" colspan="1"><p class="small r"><small>{{ ((e.valor - e.costo) * e.existencia)|number_format(2)}}</small></p></td>
+
+
+		</tr>  		
+	{% endfor %}
+
+{% endblock %}

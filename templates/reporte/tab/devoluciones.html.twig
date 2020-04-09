@@ -1,0 +1,102 @@
+<thead class="thead-inverse">
+    <tr class="small">  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">FECHA</p>
+        </th>  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">D.ID</p>
+        </th>  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">O.P.</p>
+        </th>
+        <th class="p-1 text-left">
+            <p class="m-0 text-muted">REVISA</p>
+        </th>
+        <th class="p-1 text-left">
+            <p class="m-0 text-muted">CLIENTE</p>
+        </th>
+        <th class="p-1 text-left">
+            <p class="m-0 text-muted">CONDICION</p>
+        </th>
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">CANTIDAD</p>
+        </th>  
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">VALOR</p>
+        </th>
+        <th class="p-1 text-right">
+            <p class="m-0 text-muted">PERDIDA</p>
+        </th>
+
+        {% if is_granted('ROLE_SUPER') %}
+            <th class="p-1 text-right"></th>  
+        {% endif %}
+        
+    </tr>
+</thead>
+<tbody>
+    {% set TOTAL_VALOR = 0 %}
+    {% set TOTAL_PERDIDA = 0 %}
+
+    {% for devolucion in devoluciones %}
+        
+        {% set valor            = devolucion.cantidad * devolucion.item.valor %}
+        {% set TOTAL_VALOR      = TOTAL_VALOR + valor %}
+
+        <tr class="small p-0"> 
+
+            <td class="p-1" colspan="1" title="{{ devolucion.createdAt|date('d/m/Y h:i:s a') }} | {{ devolucion.createdAt|fecha }}"> 
+                <p class="m-0" >{{devolucion.createdAt|date('d/m')}}</p>
+            </td>
+
+            <td class="p-1" colspan="1"> 
+                <p class="m-0" >{{"%04d"|format(devolucion.id)}}</p>
+            </td>
+
+            <td class="p-1 text-right" colspan="1" title="ID#{{"%04d"|format(devolucion.id)}}">
+                {% if devolucion.factura.numero is defined and devolucion.factura.numero > 0 %}
+                    <p class="m-0"><strong>{{"%04d"|format(devolucion.factura.numero)}}</strong></p>
+                {% else %}
+                    <p class="m-0">[DIR.]</p>
+                {% endif %}
+            </td>
+            
+            <td class="p-1" colspan="1">
+                <p class="m-0">{{devolucion.usuario.nombre|slice(0,4)|upper}}</p>
+            </td>
+
+            <td class="p-1" colspan="1">
+                <p class="m-0"><strong>{{devolucion.factura.cliente.negocio|slice(0,18) }}</strong></p> 
+            </td>
+
+
+            <td class="p-1" colspan="1">
+                <p class="m-0">{{devolucion.condicion}}</p>
+            </td>
+
+            <td class="p-1 text-right text-truncate" colspan="1">
+                <p class="m-0"><strong>{{devolucion.cantidad|number_format(0)}}</strong></p>
+            </td>
+
+            <td class="p-1 text-right text-truncate" colspan="1">
+                <p class="m-0">{{valor|number_format(2)}}</p>
+            </td>
+
+            <td class="p-1 text-right" colspan="1">
+                {% if devolucion.condicion == "PERDIDA" %}
+                    {% set TOTAL_PERDIDA 	= TOTAL_PERDIDA + valor %} 
+                    <p class="m-0">-<strong>{{ valor|number_format(2)}}</strong></p>
+                {% else %}
+                    <p class="m-0">0.00</p>
+                {% endif %}
+            </td> 
+        </tr>		
+    {% endfor %}
+</tbody> 
+<tfooter>
+    <tr class="small p-0">
+        <td class="p-1 text-right pr-5" colspan="7">TOTAL C$</td>
+        <td class="p-1 text-right" colspan="1">{{TOTAL_VALOR|number_format(2)}}</td>
+        <td class="p-1 text-right" colspan="1">-<strong>{{TOTAL_PERDIDA|number_format(2)}}</strong></td>
+    </tr>
+</tfooter>

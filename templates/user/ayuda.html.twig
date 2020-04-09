@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inicio de sesión{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .fondo{
+        background: url("{{asset('/ui/fondo-login.jpg')}}") no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: 1100px;
+        background-position:top right; 
+        min-height:550px;
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<section class="container-fluid fondo">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+
+                <img src="{{asset('logo.svg')}}" class="img-fluid mt-2">
+
+                {{ form_start(form) }}
+                
+                 
+                    <div class="card-body bg-white-tr mt-0 text-center"> 
+                    
+                        <h1 class="h3 mb-3 font-weight-normal">Ingrese correo electrónico</h1>
+
+                        <div class="row"> 
+                            <div class="col-12">
+                                <div class="form-group form-group-lg">
+                                    <label class="small m-0">Correo Electrónico</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-lite text-bold bg-white">
+                                                <i class="fa fa-envelope"></i>
+                                            </span>
+                                        </div>
+                                        {{ form_widget(form.email) }}
+                                    </div>
+                                    <div class="form_errors small">{{ form_errors(form.email) }}</div>
+                                </div>
+                            </div> 
+                        </div> 
+ 
+
+                        <div class="input-group">
+                            <input type="hidden" name="_csrf_token"
+                                value="{{ csrf_token('authenticate') }}"
+                            >
+                        </div>
+
+                        <button class="btn btn-lg btn-outline-dark  mt-4 mb-2" type="submit">
+                            Recuperar
+                        </button>
+
+                        <br>
+                        <a class="ml-1 text-black" href="{{url('usuario_editar')}}"><small>Registrar</small></a>
+                        <a class="ml-1 text-black" href="{{url('app_login')}}"><small><strong>Login</strong></small></a>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+            <div class="col-sm-8">
+                 
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

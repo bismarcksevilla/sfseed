@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<section class="container-fluid">
+    <div class="card">
+        <div class="card-body sombra p-3">
+            <div class="row">
+                <div class="d-none d-md-block col-md-3 col-lg-2" style="border-right:2px solid silver">
+                    <div class="btn-group-vertica" role="group" aria-label="Basic example">
+
+                        <div class="dropdown-divider m-0 mt-3"></div>
+                            <p class="m-0 text-center text-muted small">
+                                <i class="fa fa-user"></i>
+                                <strong>{{app.user.nombre}}</strong>
+                            </p>
+                        <div class="dropdown-divider m-0 mb-3"></div>
+                        
+                        {{ render(controller( 'App\\Controller\\DefaultController::menuapp',{ 'route': route })) }}
+                    </div>
+                </div>
+                <div class="col-md-9 col-lg-10" style="min-height:450px;">
+
+                    {% block titulos %}
+                        <div class="row">
+                            <div class="col-12">
+                                {% include "global/head_titulo.html.twig" %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3">
+                                {% include "global/head_bar.html.twig" %}
+                            </div>
+
+                            <div class="col-9">
+                                <div class="btn-group btn-group-md">
+
+                                    {% block bar_btn %}
+
+                                        {% if action == "listar" %}
+                                            {% include "global/head_busqueda.html.twig" %}
+                                        {% endif %}
+                                        
+                                        {% if action == "editar" %} 
+                                            {% include "global/head_btn.html.twig" %} 
+                                        {% endif %}
+                                        
+                                    {% endblock %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endblock %} 
+
+
+                    {% block panel %}"panel"{% endblock %}        
+                </div>
+            </div>        
+        </div>
+    </div>
+</section>
+{% endblock %}

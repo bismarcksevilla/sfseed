@@ -1,0 +1,44 @@
+{% extends 'app.html.twig' %}
+
+{% block title %}A&P | Resumen{% endblock %}
+ 
+{% block titulos %}{% endblock %} 
+
+{% block panel %}
+
+    <div class="alert alert-warning">
+        <p class="small m-0">Este software se encuentra en face de desarrollo ALFA y puede contener errores de programación, rogamos encarecidamente su comprensión.</p>
+    </div>
+    <h1>Bienvenido {{app.user.nombre}}</h1>
+    <p class="text-muted">En esta sección encontrará información de interes y algunos enlaces importantes.</p>
+    
+    <ul>
+        <li>
+            <a
+                class=""
+                href="https://bitbucket.org/bis86/ap/issues/new" 
+                target="_blanck"
+            >Reporte fallas o solicite mejoras en este enlace.</a>
+        </li>
+        <li>
+            <a
+                class="text-muted disabled"
+                target="_blanck"
+            >Preguntas frecuentes.</a>
+        </li>
+        <li>
+            <a
+                class="text-muted disabled"
+                target="_blanck"
+            >La documentación vive en esta wiki.</a>
+        </li>
+        <li>
+            <a
+                class="text-muted disabled"
+                target="_blanck"
+            >Licencias y otros detalles</a>
+        </li>
+    </ul>
+
+    
+{% endblock %}
